@@ -7,7 +7,7 @@ use_frameworks!
 pod 'SMHTTPClient', git: "https://github.com/soutaro/SMHTTPClient.git"
 
 target 'UbiregiExtensionClientTests', :exclusive => true do
-  pod "GCDWebServer"
+  pod 'Swifter'
   pod 'Quick'
   pod 'Nimble'
 end
