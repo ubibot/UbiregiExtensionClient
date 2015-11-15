@@ -12,7 +12,7 @@ public class UXCUbiregiExtension: NSObject {
     public let port: UInt
 
     let client: UXCAPIClient
-    var _status: UXCExtensionStatus
+    var _connectionStatus: UXCConnectionStatus
     let lock: ReadWriteLock
     
     public init(hostname: String, port: UInt, numericAddress: String?) {
@@ -30,13 +30,13 @@ public class UXCUbiregiExtension: NSObject {
         
         self.client = UXCAPIClient(hostname: self.hostname, port: self.port, address: address)
         
-        self._status = .Initialized
+        self._connectionStatus = .Initialized
         
         self.lock = ReadWriteLock()
     }
     
-    public var status: UXCExtensionStatus {
-        return self.lock.read { self._status }
+    public var connectionStatus: UXCConnectionStatus {
+        return self.lock.read { self._connectionStatus }
     }
     
     public func requestJSON(path: String, query: [String: String], method: UXCHttpMethod, body: AnyObject?, timeout: NSTimeInterval = 5, callback: (UXCAPIResponse) -> ()) -> () {
@@ -60,9 +60,9 @@ public class UXCUbiregiExtension: NSObject {
         self.client.sendRequest(path, query: query, method: m, timeout: timeout) { response in
             self.lock.write {
                 if response is UXCAPISuccessResponse {
-                    self._status = .Connected
+                    self._connectionStatus = .Connected
                 } else {
-                    self._status = .Error
+                    self._connectionStatus = .Error
                 }
             }
             

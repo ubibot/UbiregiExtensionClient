@@ -11,7 +11,7 @@ public class UXCConstants: NSObject {
     public static let ErrorDomain = "UbiregiExtensionClientErrorDomain"
 }
 
-@objc public enum UXCExtensionStatus: Int {
+@objc public enum UXCConnectionStatus: Int {
     case Initialized
     case Connected
     case Error

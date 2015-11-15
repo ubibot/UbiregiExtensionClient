@@ -74,8 +74,8 @@ class UbiregiExtensionTests: QuickSpec {
                     }
                 }
                 
-                describe("status update") {
-                    it("updates status to .Connected") {
+                describe("connectionStatus update") {
+                    it("updates connectionStatus to .Connected") {
                         withSwifter { server in
                             server["/test"] = { request in HttpResponse.OK(HttpResponseBody.JSON([1,2,3])) }
                             
@@ -85,18 +85,18 @@ class UbiregiExtensionTests: QuickSpec {
                                 }
                             }
                             
-                            expect(client.status).to(equal(UXCExtensionStatus.Connected))
+                            expect(client.connectionStatus).to(equal(UXCConnectionStatus.Connected))
                         }
                     }
 
-                    it("updates status to .Error") {
+                    it("updates connectionStatus to .Error") {
                         waitUntil(timeout: 3) { done in
                             client.requestJSON("/test", query: [:], method: .PUT, body: ["test": true]) { response in
                                 done()
                             }
                         }
                         
-                        expect(client.status).to(equal(UXCExtensionStatus.Error))
+                        expect(client.connectionStatus).to(equal(UXCConnectionStatus.Error))
                     }
                 }
             }
