@@ -19,6 +19,7 @@
 		ABCC5A761BF4787900E35F85 /* APIResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC5A751BF4787900E35F85 /* APIResponseTests.swift */; };
 		ABCC5A781BF4873B00E35F85 /* APIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC5A771BF4873B00E35F85 /* APIClientTests.swift */; };
 		ABCC5A7A1BF86B5800E35F85 /* TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC5A791BF86B5800E35F85 /* TestHelper.swift */; };
+		ABCC5A7C1BF871E000E35F85 /* ReadWriteLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC5A7B1BF871E000E35F85 /* ReadWriteLock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		ABCC5A751BF4787900E35F85 /* APIResponseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIResponseTests.swift; sourceTree = "<group>"; };
 		ABCC5A771BF4873B00E35F85 /* APIClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClientTests.swift; sourceTree = "<group>"; };
 		ABCC5A791BF86B5800E35F85 /* TestHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHelper.swift; sourceTree = "<group>"; };
+		ABCC5A7B1BF871E000E35F85 /* ReadWriteLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadWriteLock.swift; sourceTree = "<group>"; };
 		D8D3AD814137B6B0D887FEF8 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		F088A731CBEAB835EA1F0FDB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F5D998D5D4781AD5DE3F372F /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				ABCA18331BF24C0F0086BB0B /* AddressHelper.swift */,
+				ABCC5A7B1BF871E000E35F85 /* ReadWriteLock.swift */,
 				ABCA18351BF2EB7A0086BB0B /* UXCAPIClient.swift */,
 				ABCA18311BF249C40086BB0B /* UXCAPIResponse.swift */,
 				ABBEEF951BF2445200C3A80E /* UXCConstants.swift */,
@@ -338,6 +341,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABCC5A7C1BF871E000E35F85 /* ReadWriteLock.swift in Sources */,
 				ABCA18341BF24C0F0086BB0B /* AddressHelper.swift in Sources */,
 				ABCA18321BF249C40086BB0B /* UXCAPIResponse.swift in Sources */,
 				ABCA18361BF2EB7A0086BB0B /* UXCAPIClient.swift in Sources */,

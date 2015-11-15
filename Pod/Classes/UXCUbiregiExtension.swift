@@ -13,7 +13,7 @@ public class UXCUbiregiExtension: NSObject {
 
     let client: UXCAPIClient
     var _status: UXCExtensionStatus
-    let queue: dispatch_queue_t
+    let lock: ReadWriteLock
     
     public init(hostname: String, port: UInt, numericAddress: String?) {
         self.hostname = hostname
@@ -32,27 +32,11 @@ public class UXCUbiregiExtension: NSObject {
         
         self._status = .Initialized
         
-        self.queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-    }
-    
-    private func withReadLock<T>(proc:() -> T) -> T {
-        var result: T? = nil
-        dispatch_sync(self.queue) {
-            result = proc()
-        }
-        return result!
-    }
-    
-    private func withWriteLock<T>(proc: () -> T) -> T {
-        var result: T? = nil
-        dispatch_barrier_sync(self.queue) {
-            result = proc()
-        }
-        return result!
+        self.lock = ReadWriteLock()
     }
     
     public var status: UXCExtensionStatus {
-        return self.withReadLock { self._status }
+        return self.lock.read { self._status }
     }
     
     public func requestJSON(path: String, query: [String: String], method: UXCHttpMethod, body: AnyObject?, timeout: NSTimeInterval = 5, callback: (UXCAPIResponse) -> ()) -> () {
@@ -74,7 +58,7 @@ public class UXCUbiregiExtension: NSObject {
         }
         
         self.client.sendRequest(path, query: query, method: m, timeout: timeout) { response in
-            self.withWriteLock {
+            self.lock.write {
                 if response is UXCAPISuccessResponse {
                     self._status = .Connected
                 } else {
