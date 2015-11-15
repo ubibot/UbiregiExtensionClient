@@ -178,7 +178,7 @@ class APIClientTests: QuickSpec {
                 it("uses cached sockaddr if name resolution timed out") {
                     let resolver = NameResolver(hostname: "localhost", port: 80)
                     resolver.run()
-                    let address = resolver.results.first!
+                    let address = resolver.IPv4Results.first!
                     
                     let request = UXCAPIClient(hostname: "no-such-host.local", port: 80, address: address)
                     
@@ -220,7 +220,7 @@ class APIClientTests: QuickSpec {
                 it("uses cached sockaddr if present") {
                     let resolver = NameResolver(hostname: "localhost", port: 80)
                     resolver.run()
-                    let address = resolver.results.first!
+                    let address = resolver.IPv4Results.first!
                     
                     let request = UXCAPIClient(hostname: "no-such-host", port: 80, address: address)
                     
