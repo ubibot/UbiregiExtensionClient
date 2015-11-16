@@ -100,6 +100,24 @@ class UbiregiExtensionStatusTests: QuickSpec {
                     }
                 }
             }
+
+            describe("notification") {
+                it("posts notification on updateStatus call") {
+                    withSwifter { server in
+                        server["/status"] = { request in HttpResponse.OK(HttpResponseBody.JSON(jsonResponse)) }
+                        
+                        self.expectationForNotification(UbiregiExtensionDidUpdateStatusNotification, object: client, handler: nil)
+                        
+                        waitUntil { done in
+                            client.updateStatus {
+                                done()
+                            }
+                        }
+                        
+                        self.waitForExpectationsWithTimeout(3, handler: nil)
+                    }
+                }
+            }
         }
         
         describe("version") {

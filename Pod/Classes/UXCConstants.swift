@@ -1,6 +1,6 @@
 import Foundation
 
-public enum UXCErrorCode: Int {
+@objc public enum UXCErrorCode: Int {
     case Unknown
     case NameResolution
     case ConnectionFailure

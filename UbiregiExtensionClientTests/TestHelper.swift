@@ -22,3 +22,19 @@ func dictionary(pairs: [(String, String)]) -> [String: String] {
     
     return h
 }
+
+class NotificationTrace: NSObject {
+    var notifications: [NSNotification]
+    
+    override init() {
+        self.notifications = []
+    }
+    
+    func didReceiveNotification(notification: NSNotification) {
+        self.notifications.append(notification)
+    }
+    
+    func notificationNames() -> [String] {
+        return self.notifications.map { $0.name }
+    }
+}

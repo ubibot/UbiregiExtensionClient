@@ -7,6 +7,10 @@ public enum UXCHttpMethod: Int {
     case PUT
 }
 
+
+let UbiregiExtensionDidUpdateConnectionStatusNotification = "UXCUbiregiExtensionDidUpdateConnectionStatusNotification"
+let UbiregiExtensionDidUpdateStatusNotification = "UXCUbiregiExtensionDidUpdateConnectionNotification"
+
 public class UXCUbiregiExtension: NSObject {
     public let hostname: String
     public let port: UInt
@@ -64,6 +68,8 @@ public class UXCUbiregiExtension: NSObject {
         }
         
         self.client.sendRequest(path, query: query, method: m, timeout: timeout) { response in
+            let lastStatus = self.connectionStatus
+            
             self.lock.write {
                 if response is UXCAPISuccessResponse {
                     self._connectionStatus = .Connected
@@ -71,11 +77,15 @@ public class UXCUbiregiExtension: NSObject {
                 
                 if let response = response as? UXCAPIErrorResponse {
                     if allowTimeout && response.error.code == UXCErrorCode.Timeout.rawValue {
-                        // Skip
+                        // Skip updating to error
                     } else {
                         self._connectionStatus = .Error
                     }
                 }
+            }
+            
+            if lastStatus != self.connectionStatus {
+                self.postNotification(UbiregiExtensionDidUpdateConnectionStatusNotification)
             }
             
             callback(response)
@@ -102,15 +112,25 @@ public class UXCUbiregiExtension: NSObject {
         }
     }
     
+    private func postNotification(name: String, userInfo: [NSObject: AnyObject]? = nil) {
+        dispatch_async(dispatch_get_main_queue()) {
+            NSNotificationCenter.defaultCenter().postNotificationName(name, object: self, userInfo: userInfo)
+        }
+    }
+    
     public func updateStatus(reload: Bool = false, callback: () -> ()) {
         let timestamp = ISO8601String()
         
         self.requestJSON("/status", query: ["timestamp": timestamp, "reload": reload ? "true" : "false"], method: .GET, body: nil) { response in
             if let response = response as? UXCAPISuccessResponse {
                 if response.code == 200 {
+                    let newStatus = response.JSONBody
+                    
                     self.lock.write {
-                        self._status = response.JSONBody
+                        self._status = newStatus
                     }
+                    
+                    self.postNotification(UbiregiExtensionDidUpdateStatusNotification)
                 }
             }
             
