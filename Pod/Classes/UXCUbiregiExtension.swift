@@ -82,6 +82,14 @@ public class UXCUbiregiExtension: NSObject {
         }
     }
     
+    @objc public func getJSON(path: String, query: [String: String] = [:], timeout: NSTimeInterval = 5, callback: (UXCAPIResponse) -> ()) {
+        self.requestJSON(path, query: query, method: .GET, body: nil, timeout: timeout, callback: callback)
+    }
+    
+    @objc public func postJSON(path: String, json: AnyObject, timeout: NSTimeInterval = 5, callback: (UXCAPIResponse) -> ()) {
+        self.requestJSON(path, query: [:], method: .POST, body: json, callback: callback)
+    }
+    
     public var version: UXCVersion? {
         if let status = self.status as? [String: AnyObject] {
             if let v = status["version"] {
