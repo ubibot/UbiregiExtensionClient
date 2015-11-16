@@ -45,7 +45,7 @@ public class UXCUbiregiExtension: NSObject {
         return self.lock.read { self._status }
     }
     
-    public func requestJSON(path: String, query: [String: String], method: UXCHttpMethod, body: AnyObject?, timeout: NSTimeInterval = 5, callback: (UXCAPIResponse) -> ()) -> () {
+    public func requestJSON(path: String, query: [String: String], method: UXCHttpMethod, body: AnyObject?, timeout: NSTimeInterval = 5, allowTimeout: Bool = false, callback: (UXCAPIResponse) -> ()) -> () {
         let bodyData: NSData
         if let b = body {
             bodyData = try! NSJSONSerialization.dataWithJSONObject(b, options: NSJSONWritingOptions.PrettyPrinted)
@@ -67,8 +67,14 @@ public class UXCUbiregiExtension: NSObject {
             self.lock.write {
                 if response is UXCAPISuccessResponse {
                     self._connectionStatus = .Connected
-                } else {
-                    self._connectionStatus = .Error
+                }
+                
+                if let response = response as? UXCAPIErrorResponse {
+                    if allowTimeout && response.error.code == UXCErrorCode.Timeout.rawValue {
+                        // Skip
+                    } else {
+                        self._connectionStatus = .Error
+                    }
                 }
             }
             
@@ -101,6 +107,26 @@ public class UXCUbiregiExtension: NSObject {
             }
             
             callback()
+        }
+    }
+    
+    public func scanBarcode(timeout: NSTimeInterval = 20, callback: (String?) -> ()) {
+        self.requestJSON("/scan", query: [:], method: .GET, body: nil, timeout: timeout, allowTimeout: true) { response in
+            let barcode: String?
+            
+            if let response = response as? UXCAPISuccessResponse {
+                let data = response.body
+                let s = NSString(data: data, encoding: NSUTF8StringEncoding)! as String
+                if s.characters.isEmpty {
+                    barcode = nil
+                } else {
+                    barcode = s
+                }
+            } else {
+                barcode = nil
+            }
+            
+            callback(barcode)
         }
     }
 }

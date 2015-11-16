@@ -24,6 +24,7 @@
 		ABCC5A941BF9BD3700E35F85 /* UbiregiExtensionStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC5A931BF9BD3700E35F85 /* UbiregiExtensionStatusTests.swift */; };
 		ABCC5A981BF9BF6500E35F85 /* UXCVersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC5A971BF9BF6500E35F85 /* UXCVersionTests.swift */; };
 		ABCC5A991BF9C1BA00E35F85 /* UXCVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC5A951BF9BE3900E35F85 /* UXCVersion.swift */; };
+		ABCC5A9B1BFA14ED00E35F85 /* UbiregiExtensionBarcodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC5A9A1BFA14ED00E35F85 /* UbiregiExtensionBarcodeTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		ABCC5A931BF9BD3700E35F85 /* UbiregiExtensionStatusTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UbiregiExtensionStatusTests.swift; sourceTree = "<group>"; };
 		ABCC5A951BF9BE3900E35F85 /* UXCVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UXCVersion.swift; sourceTree = "<group>"; };
 		ABCC5A971BF9BF6500E35F85 /* UXCVersionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UXCVersionTests.swift; sourceTree = "<group>"; };
+		ABCC5A9A1BFA14ED00E35F85 /* UbiregiExtensionBarcodeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UbiregiExtensionBarcodeTests.swift; sourceTree = "<group>"; };
 		D8D3AD814137B6B0D887FEF8 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		F088A731CBEAB835EA1F0FDB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F5D998D5D4781AD5DE3F372F /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,6 +123,7 @@
 				ABCC5A771BF4873B00E35F85 /* APIClientTests.swift */,
 				ABCC5A751BF4787900E35F85 /* APIResponseTests.swift */,
 				ABCC5A791BF86B5800E35F85 /* TestHelper.swift */,
+				ABCC5A9A1BFA14ED00E35F85 /* UbiregiExtensionBarcodeTests.swift */,
 				ABCC5A931BF9BD3700E35F85 /* UbiregiExtensionStatusTests.swift */,
 				ABBEEF7C1BF23DBC00C3A80E /* UbiregiExtensionTests.swift */,
 				ABCC5A971BF9BF6500E35F85 /* UXCVersionTests.swift */,
@@ -368,6 +371,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABCC5A9B1BFA14ED00E35F85 /* UbiregiExtensionBarcodeTests.swift in Sources */,
 				ABBEEF7D1BF23DBC00C3A80E /* UbiregiExtensionTests.swift in Sources */,
 				ABCC5A781BF4873B00E35F85 /* APIClientTests.swift in Sources */,
 				ABCC5A981BF9BF6500E35F85 /* UXCVersionTests.swift in Sources */,
