@@ -94,7 +94,7 @@ internal class UXCAPIClient {
             return path
         } else {
             let q = try! query.map { (key, value) throws -> String in
-                let escaped = value.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+                let escaped = value.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
                 return "\(key)=\(escaped)"
             }.joinWithSeparator("&")
             
