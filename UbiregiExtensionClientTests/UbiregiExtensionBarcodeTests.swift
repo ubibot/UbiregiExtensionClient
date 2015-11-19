@@ -12,6 +12,10 @@ class UbiregiExtensionBarcodeTests: QuickSpec {
             client = UXCUbiregiExtension(hostname: "localhost", port: 8081, numericAddress: nil)
         }
         
+        afterEach {
+            client = nil
+        }
+        
         describe("#scanBarcode") {
             it("scans barcode") {
                 withSwifter { server in
@@ -20,7 +24,7 @@ class UbiregiExtensionBarcodeTests: QuickSpec {
                     waitUntil { done in
                         client.scanBarcode { barcode in
                             expect(barcode).notTo(beNil())
-                            expect(barcode!).to(equal("1234567890"))
+                            expect(barcode).to(equal("1234567890"))
                             done()
                         }
                     }

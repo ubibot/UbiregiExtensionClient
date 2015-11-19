@@ -15,6 +15,12 @@ class UbiregiExtensionTests: QuickSpec {
                 trace = NotificationTrace()
             }
             
+            afterEach {
+                client = nil
+                trace = nil
+            }
+            
+            
             describe("#requestJSON") {
                 context("GET") {
                     it("sends GET request") {

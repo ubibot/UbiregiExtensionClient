@@ -11,6 +11,10 @@ class UbiregiExtensionStatusTests: QuickSpec {
         beforeEach {
             client = UXCUbiregiExtension(hostname: "localhost", port: 8081, numericAddress: nil)
         }
+        
+        afterEach {
+            client = nil
+        }
 
         describe("#updateStatus") {
             let jsonResponse: AnyObject = [

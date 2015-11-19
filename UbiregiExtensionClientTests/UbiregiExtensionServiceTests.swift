@@ -7,16 +7,17 @@ import Swifter
 class UbiregiExtensionServiceTests: QuickSpec {
     override func spec() {
         var service: UXCUbiregiExtensionService!
+        var ext: UXCUbiregiExtension!
         
         beforeEach {
             service = UXCUbiregiExtensionService()
+            ext = UXCUbiregiExtension(hostname: "localhost", port: 8080, numericAddress: nil)
         }
         
         afterEach {
             service = nil
+            ext = nil
         }
-        
-        let ext = UXCUbiregiExtension(hostname: "localhost", port: 8080, numericAddress: nil)
         
         describe("addExtension") {
             it("adds extension") {
@@ -74,15 +75,23 @@ class UbiregiExtensionServiceTests: QuickSpec {
         
         describe("status refresh") {
             describe("updateStatus") {
+                var e1: UXCUbiregiExtension!
+                var e2: UXCUbiregiExtension!
+                
                 beforeEach {
                     // Update connection status every seconds
                     service.updateStatusInterval = 0.1
                     // Set non main queue for notification
                     service.notificationQueue = dispatch_queue_create("com.ubiregi.UbiregiExtensionClient.test", nil)
+                    
+                    e1 = UXCUbiregiExtension(hostname: "localhost", port: 8080, numericAddress: nil)
+                    e2 = UXCUbiregiExtension(hostname: "localhost", port: 8081, numericAddress: nil)
                 }
                 
-                let e1 = UXCUbiregiExtension(hostname: "localhost", port: 8080, numericAddress: nil)
-                let e2 = UXCUbiregiExtension(hostname: "localhost", port: 8081, numericAddress: nil)
+                afterEach {
+                    e1 = nil
+                    e2 = nil
+                }
                 
                 it("updates connection status of all extensions") {
                     expect(service.connectionStatus).to(equal(UXCConnectionStatus.Initialized))

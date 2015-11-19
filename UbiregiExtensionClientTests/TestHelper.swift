@@ -4,12 +4,11 @@ import XCTest
 
 func withSwifter(port: UInt16 = 8081, k: (HttpServer) throws -> ()) {
     let server = HttpServer()
-    server.start(port)
+    XCTAssert(server.start(port))
     
     defer {
         server.stop()
     }
-    NSThread.sleepForTimeInterval(0.3)
     
     try! k(server)
 }
