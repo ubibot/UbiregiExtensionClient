@@ -10,6 +10,8 @@ public enum UXCHttpMethod: Int {
 
 let UbiregiExtensionDidUpdateConnectionStatusNotification = "UXCUbiregiExtensionDidUpdateConnectionStatusNotification"
 let UbiregiExtensionDidUpdateStatusNotification = "UXCUbiregiExtensionDidUpdateConnectionNotification"
+let UbiregiExtensionDidUpdatePrinterAvailabilityNotification = "UXCUbiregiExtensionDidUpdatePrinterAvailabilityNotification"
+let UbiregiExtensionDidUpdateBarcodeScannerAvailabilityNotification = "UXCUbiregiExtensionDidUpdateBarcodeScannerAvailabilityNotification"
 
 public class UXCUbiregiExtension: NSObject {
     public let hostname: String
@@ -17,6 +19,8 @@ public class UXCUbiregiExtension: NSObject {
 
     var _connectionStatus: UXCConnectionStatus
     var _status: AnyObject?
+    var _hasBarcodeScanner: Bool
+    var _hasPrinter: Bool
     
     let client: UXCAPIClient
     let lock: ReadWriteLock
@@ -36,6 +40,8 @@ public class UXCUbiregiExtension: NSObject {
         
         self._connectionStatus = .Initialized
         self._status = nil
+        self._hasBarcodeScanner = false
+        self._hasPrinter = false
         
         self.client = UXCAPIClient(hostname: self.hostname, port: self.port, address: address)
         self.lock = ReadWriteLock()
@@ -113,7 +119,7 @@ public class UXCUbiregiExtension: NSObject {
     }
     
     private func postNotification(name: String, userInfo: [NSObject: AnyObject]? = nil) {
-        dispatch_async(dispatch_get_main_queue()) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             NSNotificationCenter.defaultCenter().postNotificationName(name, object: self, userInfo: userInfo)
         }
     }
@@ -128,6 +134,12 @@ public class UXCUbiregiExtension: NSObject {
                     
                     self.lock.write {
                         self._status = newStatus
+                        
+                        let barcodes = (self._status?["barcodes"] as? [AnyObject]) ?? []
+                        self.setHasBarcodeScanner(!barcodes.isEmpty)
+                        
+                        let printers = (self._status?["printers"] as? [AnyObject]) ?? []
+                        self.setHasPrinter(!printers.isEmpty)
                     }
                     
                     self.postNotification(UbiregiExtensionDidUpdateStatusNotification)
@@ -150,11 +162,37 @@ public class UXCUbiregiExtension: NSObject {
                 } else {
                     barcode = s
                 }
+                
+                self.lock.write {
+                    self.setHasBarcodeScanner(response.code != 404)
+                }
             } else {
                 barcode = nil
             }
             
             callback(barcode)
+        }
+    }
+    
+    public var hasBarcodeScanner: Bool {
+        return self._hasBarcodeScanner
+    }
+    
+    public var hasPrinter: Bool {
+        return self._hasPrinter
+    }
+    
+    func setHasBarcodeScanner(f: Bool) {
+        if f != self._hasBarcodeScanner {
+            self._hasBarcodeScanner = f
+            self.postNotification(UbiregiExtensionDidUpdateBarcodeScannerAvailabilityNotification)
+        }
+    }
+    
+    func setHasPrinter(f: Bool) {
+        if f != self._hasPrinter {
+            self._hasPrinter = f
+            self.postNotification(UbiregiExtensionDidUpdatePrinterAvailabilityNotification)
         }
     }
 }

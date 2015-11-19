@@ -75,6 +75,94 @@ class UbiregiExtensionBarcodeTests: QuickSpec {
                     expect(client.connectionStatus).to(equal(UXCConnectionStatus.Connected))
                 }
             }
+            
+            it("updates hasBarcodeScanner to false if 404 returned") {
+                withSwifter { server in
+                    server["/scan"] = { request in
+                        return .NotFound
+                    }
+                
+                    client._hasBarcodeScanner = true
+                    
+                    waitUntil { done in
+                        client.scanBarcode { barcode in
+                            done()
+                        }
+                    }
+                    
+                    expect(client.hasBarcodeScanner).to(beFalse())
+                }
+            }
+            
+            it("updates hasBarcodeScanner to true if request succeeds") {
+                withSwifter { server in
+                    server["/scan"] = { request in
+                        return .OK(.Text("123"))
+                    }
+                    
+                    client._hasBarcodeScanner = false
+                    
+                    waitUntil { done in
+                        client.scanBarcode { barcode in
+                            done()
+                        }
+                    }
+                    
+                    expect(client.hasBarcodeScanner).to(beTrue())
+                }
+            }
+            
+            it("keeps hasBarcodeScanner to be true when connection failed") {
+                client._hasBarcodeScanner = true
+                
+                waitUntil { done in
+                    client.scanBarcode { barcode in
+                        done()
+                    }
+                }
+                
+                expect(client.hasBarcodeScanner).to(beTrue())
+            }
+            
+            it("posts notification when barcode scanner availability changed to false") {
+                withSwifter { server in
+                    server["/scan"] = { request in
+                        return .NotFound
+                    }
+                    
+                    client._hasBarcodeScanner = true
+                    
+                    self.expectationForNotification(UbiregiExtensionDidUpdateBarcodeScannerAvailabilityNotification, object: client, handler: nil)
+                    
+                    waitUntil { done in
+                        client.scanBarcode { barcode in
+                            done()
+                        }
+                    }
+                    
+                    self.waitForExpectationsWithTimeout(1, handler: nil)
+                }
+            }
+
+            it("posts notification when barcode scanner availability changed to true") {
+                withSwifter { server in
+                    server["/scan"] = { request in
+                        return .OK(.Text("1234567890"))
+                    }
+                    
+                    client._hasBarcodeScanner = false
+                    
+                    self.expectationForNotification(UbiregiExtensionDidUpdateBarcodeScannerAvailabilityNotification, object: client, handler: nil)
+                    
+                    waitUntil { done in
+                        client.scanBarcode { barcode in
+                            done()
+                        }
+                    }
+                    
+                    self.waitForExpectationsWithTimeout(1, handler: nil)
+                }
+            }
         }
     }
 }

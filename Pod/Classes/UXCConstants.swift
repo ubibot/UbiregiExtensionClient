@@ -9,6 +9,10 @@ import Foundation
 
 public class UXCConstants: NSObject {
     public static let ErrorDomain = "UbiregiExtensionClientErrorDomain"
+    
+    public static let UbiregiExtensionServiceDidUpdateConnectionStatusNotification = "UXCUbiregiExtensionServiceDidUpdateConnectionStatusNotification"
+    public static let UbiregiExtensionServiceDidUpdatePrinterAvailabilityNotification = "UXCUbiregiExtensionServiceDidUpdatePrinterAvailabilityNotification"
+    public static let UbiregiExtensionServiceDidUpdateBarcodeScannerAvailabilityNotification = "UXCUBiregiExtensionServiceDidUpdateBarcodeScannerAvailabilityNotification"
 }
 
 @objc public enum UXCConnectionStatus: Int {

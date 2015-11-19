@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		96134D340856B01188846D2E /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5D998D5D4781AD5DE3F372F /* Pods.framework */; };
+		AB4038F21BFB60A5007DBEA1 /* UbiregiExtensionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4038F11BFB60A5007DBEA1 /* UbiregiExtensionServiceTests.swift */; };
 		AB913FEAD1DDD8B8FF95B965 /* Pods_UbiregiExtensionClientTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD4B6C23FD6B4D136932278 /* Pods_UbiregiExtensionClientTests.framework */; };
 		ABBEEF781BF23DBC00C3A80E /* UbiregiExtensionClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBEEF6D1BF23DBC00C3A80E /* UbiregiExtensionClient.framework */; };
 		ABBEEF7D1BF23DBC00C3A80E /* UbiregiExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBEEF7C1BF23DBC00C3A80E /* UbiregiExtensionTests.swift */; };
@@ -25,6 +26,7 @@
 		ABCC5A981BF9BF6500E35F85 /* UXCVersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC5A971BF9BF6500E35F85 /* UXCVersionTests.swift */; };
 		ABCC5A991BF9C1BA00E35F85 /* UXCVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC5A951BF9BE3900E35F85 /* UXCVersion.swift */; };
 		ABCC5A9B1BFA14ED00E35F85 /* UbiregiExtensionBarcodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC5A9A1BFA14ED00E35F85 /* UbiregiExtensionBarcodeTests.swift */; };
+		ABCC5A9D1BFA1D2D00E35F85 /* UXCUbiregiExtensionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC5A9C1BFA1D2D00E35F85 /* UXCUbiregiExtensionService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +43,7 @@
 		2D00D5C356495F982BCAF95A /* Pods-UbiregiExtensionClientTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UbiregiExtensionClientTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UbiregiExtensionClientTests/Pods-UbiregiExtensionClientTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4CD4B6C23FD6B4D136932278 /* Pods_UbiregiExtensionClientTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UbiregiExtensionClientTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6837E029B62D87768076213A /* Pods-UbiregiExtensionClientTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UbiregiExtensionClientTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-UbiregiExtensionClientTests/Pods-UbiregiExtensionClientTests.release.xcconfig"; sourceTree = "<group>"; };
+		AB4038F11BFB60A5007DBEA1 /* UbiregiExtensionServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UbiregiExtensionServiceTests.swift; sourceTree = "<group>"; };
 		ABBEEF6D1BF23DBC00C3A80E /* UbiregiExtensionClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UbiregiExtensionClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABBEEF771BF23DBC00C3A80E /* UbiregiExtensionClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UbiregiExtensionClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABBEEF7C1BF23DBC00C3A80E /* UbiregiExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UbiregiExtensionTests.swift; sourceTree = "<group>"; };
@@ -60,6 +63,7 @@
 		ABCC5A951BF9BE3900E35F85 /* UXCVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UXCVersion.swift; sourceTree = "<group>"; };
 		ABCC5A971BF9BF6500E35F85 /* UXCVersionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UXCVersionTests.swift; sourceTree = "<group>"; };
 		ABCC5A9A1BFA14ED00E35F85 /* UbiregiExtensionBarcodeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UbiregiExtensionBarcodeTests.swift; sourceTree = "<group>"; };
+		ABCC5A9C1BFA1D2D00E35F85 /* UXCUbiregiExtensionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UXCUbiregiExtensionService.swift; sourceTree = "<group>"; };
 		D8D3AD814137B6B0D887FEF8 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		F088A731CBEAB835EA1F0FDB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F5D998D5D4781AD5DE3F372F /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,6 +128,7 @@
 				ABCC5A751BF4787900E35F85 /* APIResponseTests.swift */,
 				ABCC5A791BF86B5800E35F85 /* TestHelper.swift */,
 				ABCC5A9A1BFA14ED00E35F85 /* UbiregiExtensionBarcodeTests.swift */,
+				AB4038F11BFB60A5007DBEA1 /* UbiregiExtensionServiceTests.swift */,
 				ABCC5A931BF9BD3700E35F85 /* UbiregiExtensionStatusTests.swift */,
 				ABBEEF7C1BF23DBC00C3A80E /* UbiregiExtensionTests.swift */,
 				ABCC5A971BF9BF6500E35F85 /* UXCVersionTests.swift */,
@@ -149,6 +154,7 @@
 				ABCA18311BF249C40086BB0B /* UXCAPIResponse.swift */,
 				ABBEEF951BF2445200C3A80E /* UXCConstants.swift */,
 				ABBEEF961BF2445200C3A80E /* UXCUbiregiExtension.swift */,
+				ABCC5A9C1BFA1D2D00E35F85 /* UXCUbiregiExtensionService.swift */,
 				ABCC5A951BF9BE3900E35F85 /* UXCVersion.swift */,
 			);
 			name = Classes;
@@ -357,6 +363,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABCC5A7C1BF871E000E35F85 /* ReadWriteLock.swift in Sources */,
+				ABCC5A9D1BFA1D2D00E35F85 /* UXCUbiregiExtensionService.swift in Sources */,
 				ABCC5A991BF9C1BA00E35F85 /* UXCVersion.swift in Sources */,
 				ABCA18341BF24C0F0086BB0B /* AddressHelper.swift in Sources */,
 				ABCA18321BF249C40086BB0B /* UXCAPIResponse.swift in Sources */,
@@ -372,6 +379,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABCC5A9B1BFA14ED00E35F85 /* UbiregiExtensionBarcodeTests.swift in Sources */,
+				AB4038F21BFB60A5007DBEA1 /* UbiregiExtensionServiceTests.swift in Sources */,
 				ABBEEF7D1BF23DBC00C3A80E /* UbiregiExtensionTests.swift in Sources */,
 				ABCC5A781BF4873B00E35F85 /* APIClientTests.swift in Sources */,
 				ABCC5A981BF9BF6500E35F85 /* UXCVersionTests.swift in Sources */,

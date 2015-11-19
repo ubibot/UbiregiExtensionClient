@@ -118,6 +118,76 @@ class UbiregiExtensionStatusTests: QuickSpec {
                     }
                 }
             }
+            
+            describe("device availability") {
+                let responseWithDevices: AnyObject = [
+                    "version": "1.2.3",
+                    "product_version": "October, 2015",
+                    "release": "1-3",
+                    "printers": ["present"],
+                    "barcodes": ["present"]
+                ]
+
+                let responseWithoutDevices: AnyObject = [
+                    "version": "1.2.3",
+                    "product_version": "October, 2015",
+                    "release": "1-3",
+                    "printers": [],
+                    "barcodes": []
+                ]
+
+                it("updates device availability to true") {
+                    withSwifter { server in
+                        server["/status"] = { request in .OK(.Json(responseWithDevices)) }
+                        
+                        client._hasBarcodeScanner = false
+                        client._hasPrinter = false
+                        
+                        waitUntil { done in
+                            client.updateStatus {
+                                done()
+                            }
+                        }
+                        
+                        expect(client.hasBarcodeScanner).to(beTrue())
+                        expect(client.hasPrinter).to(beTrue())
+                    }
+                }
+                
+                it("updates device availability to false") {
+                    withSwifter { server in
+                        server["/status"] = { request in .OK(.Json(responseWithoutDevices)) }
+                        
+                        client._hasPrinter = true
+                        client._hasBarcodeScanner = true
+                        
+                        waitUntil { done in
+                            client.updateStatus { done() }
+                        }
+                        
+                        expect(client.hasPrinter).to(beFalse())
+                        expect(client.hasBarcodeScanner).to(beFalse())
+                    }
+                }
+                
+                it("posts notification on availability update") {
+                    withSwifter { server in
+                        server["/status"] = { request in .OK(.Json(responseWithoutDevices)) }
+                        
+                        client._hasPrinter = true
+                        client._hasBarcodeScanner = true
+                        
+                        self.expectationForNotification(UbiregiExtensionDidUpdateBarcodeScannerAvailabilityNotification, object: client, handler: nil)
+                        self.expectationForNotification(UbiregiExtensionDidUpdatePrinterAvailabilityNotification, object: client, handler: nil)
+                        
+                        waitUntil { done in
+                            client.updateStatus { done() }
+                        }
+                        
+                        self.waitForExpectationsWithTimeout(1, handler: nil)
+                    }
+                }
+            }
         }
         
         describe("version") {

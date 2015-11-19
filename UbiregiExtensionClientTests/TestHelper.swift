@@ -1,5 +1,6 @@
 import Foundation
 import Swifter
+import XCTest
 
 func withSwifter(port: UInt16 = 8081, k: (HttpServer) throws -> ()) {
     let server = HttpServer()
@@ -8,9 +9,15 @@ func withSwifter(port: UInt16 = 8081, k: (HttpServer) throws -> ()) {
     defer {
         server.stop()
     }
-    
     NSThread.sleepForTimeInterval(0.3)
+    
     try! k(server)
+}
+
+func returnJSON(object: [String: AnyObject]) -> HttpRequest -> HttpResponse {
+    return { (response: HttpRequest) in
+        HttpResponse.OK(HttpResponseBody.JSON(object))
+    }
 }
 
 func dictionary(pairs: [(String, String)]) -> [String: String] {
@@ -36,5 +43,30 @@ class NotificationTrace: NSObject {
     
     func notificationNames() -> [String] {
         return self.notifications.map { $0.name }
+    }
+}
+
+func waitFor(timeout: NSTimeInterval, message: String? = nil, predicate: () -> Bool) {
+    let endTime = NSDate().dateByAddingTimeInterval(timeout)
+    
+    while NSDate().compare(endTime) == NSComparisonResult.OrderedAscending {
+        NSThread.sleepForTimeInterval(0.1)
+        if predicate() {
+            return
+        }
+    }
+
+    XCTAssert(false, message ?? "Timeout exceeded for waitFor")
+}
+
+func globally(timeout: NSTimeInterval = 1, message: String? = nil, predicate: () -> Bool) {
+    let endTime = NSDate().dateByAddingTimeInterval(timeout)
+    
+    while NSDate().compare(endTime) == NSComparisonResult.OrderedAscending {
+        NSThread.sleepForTimeInterval(0.1)
+        if !predicate() {
+            XCTAssert(false, message ?? "predicate does not hold which expected to hold globally")
+            return
+        }
     }
 }
