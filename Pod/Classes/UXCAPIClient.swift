@@ -77,6 +77,9 @@ internal class UXCAPIClient {
                     case .Aborted:
                         let error = NSError(domain: UXCConstants.ErrorDomain, code: UXCErrorCode.Timeout.rawValue, userInfo: nil)
                         callback(UXCAPIErrorResponse(error: error))
+                    case .Error(let e):
+                        print("UXCAPIClient.sendRequest: request results in error => \(e)")
+                        fallthrough
                     default:
                         let error = NSError(domain: UXCConstants.ErrorDomain, code: UXCErrorCode.ConnectionFailure.rawValue, userInfo: nil)
                         callback(UXCAPIErrorResponse(error: error))
@@ -88,6 +91,7 @@ internal class UXCAPIClient {
             }
         }
     }
+    
     
     func pathWithQuery(path: String, query: [String: String]) -> String {
         if query.isEmpty {
