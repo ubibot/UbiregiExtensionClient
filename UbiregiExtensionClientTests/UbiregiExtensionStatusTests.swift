@@ -32,7 +32,7 @@ class UbiregiExtensionStatusTests: QuickSpec {
                             let d = dictionary(request.urlParams)
                             expect(d["timestamp"]).notTo(beEmpty())
                             expect(d["reload"]).to(equal("false"))
-                            return HttpResponse.OK(HttpResponseBody.JSON(jsonResponse))
+                            return HttpResponse.OK(.Json(jsonResponse))
                         }
                         
                         waitUntil { done in
@@ -48,7 +48,7 @@ class UbiregiExtensionStatusTests: QuickSpec {
                         server["/status"] = { (request: HttpRequest) in
                             let d = dictionary(request.urlParams)
                             expect(d["reload"]).to(equal("true"))
-                            return HttpResponse.OK(HttpResponseBody.JSON(jsonResponse))
+                            return HttpResponse.OK(.Json(jsonResponse))
                         }
                         
                         waitUntil { done in
@@ -64,7 +64,7 @@ class UbiregiExtensionStatusTests: QuickSpec {
                 it("updates status") {
                     withSwifter { server in
                         server["/status"] = { request in
-                            return HttpResponse.OK(HttpResponseBody.JSON(jsonResponse))
+                            return HttpResponse.OK(.Json(jsonResponse))
                         }
                         
                         waitUntil { done in
@@ -108,7 +108,7 @@ class UbiregiExtensionStatusTests: QuickSpec {
             describe("notification") {
                 it("posts notification on updateStatus call") {
                     withSwifter { server in
-                        server["/status"] = { request in HttpResponse.OK(HttpResponseBody.JSON(jsonResponse)) }
+                        server["/status"] = { request in HttpResponse.OK(.Json(jsonResponse)) }
                         
                         self.expectationForNotification(UbiregiExtensionDidUpdateStatusNotification, object: client, handler: nil)
                         

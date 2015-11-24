@@ -8,16 +8,21 @@ DEPENDENCIES:
   - Nimble
   - Quick
   - SMHTTPClient (from `https://github.com/soutaro/SMHTTPClient.git`)
-  - Swifter
+  - Swifter (from `https://github.com/glock45/swifter.git`)
 
 EXTERNAL SOURCES:
   SMHTTPClient:
     :git: https://github.com/soutaro/SMHTTPClient.git
+  Swifter:
+    :git: https://github.com/glock45/swifter.git
 
 CHECKOUT OPTIONS:
   SMHTTPClient:
     :commit: aaf8b5c3897e5fe1a007313288ff7232ab853815
     :git: https://github.com/soutaro/SMHTTPClient.git
+  Swifter:
+    :commit: 1cbd5354d7abffe014e8334b57211fea13a3ab8b
+    :git: https://github.com/glock45/swifter.git
 
 SPEC CHECKSUMS:
   Nimble: 4c353d43735b38b545cbb4cb91504588eb5de926

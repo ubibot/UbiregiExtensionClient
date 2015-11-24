@@ -19,7 +19,7 @@ class UbiregiExtensionBarcodeTests: QuickSpec {
         describe("#scanBarcode") {
             it("scans barcode") {
                 withSwifter { server in
-                    server["/scan"] = { request in .OK(.STRING("1234567890")) }
+                    server["/scan"] = { request in .OK(.Text("1234567890")) }
                     
                     waitUntil { done in
                         client.scanBarcode { barcode in
@@ -33,7 +33,7 @@ class UbiregiExtensionBarcodeTests: QuickSpec {
             
             it("yields callback with nil if no result obtained") {
                 withSwifter { server in
-                    server["/scan"] = { request in .OK(.STRING("")) }
+                    server["/scan"] = { request in .OK(.Text("")) }
                     
                     waitUntil { done in
                         client.scanBarcode { barcode in
@@ -48,7 +48,7 @@ class UbiregiExtensionBarcodeTests: QuickSpec {
                 withSwifter { server in
                     server["/scan"] = { request in
                         NSThread.sleepForTimeInterval(1)
-                        return .OK(.STRING(""))
+                        return .OK(.Text(""))
                     }
                     
                     waitUntil { done in
@@ -66,7 +66,7 @@ class UbiregiExtensionBarcodeTests: QuickSpec {
                     
                     server["/scan"] = { request in
                         NSThread.sleepForTimeInterval(1)
-                        return .OK(.STRING(""))
+                        return .OK(.Text(""))
                     }
                     
                     waitUntil { done in

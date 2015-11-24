@@ -4,7 +4,7 @@ import XCTest
 
 func withSwifter(port: UInt16 = 8081, k: (HttpServer) throws -> ()) {
     let server = HttpServer()
-    XCTAssert(server.start(port))
+    try! server.start(port)
     
     defer {
         server.stop()
@@ -15,7 +15,7 @@ func withSwifter(port: UInt16 = 8081, k: (HttpServer) throws -> ()) {
 
 func returnJSON(object: [String: AnyObject]) -> HttpRequest -> HttpResponse {
     return { (response: HttpRequest) in
-        HttpResponse.OK(HttpResponseBody.JSON(object))
+        HttpResponse.OK(HttpResponseBody.Json(object))
     }
 }
 

@@ -14,7 +14,7 @@ class APIClientTests: QuickSpec {
                 it("invokes callback with UXCAPISuccessResult if API call succeeds") {
                     withSwifter { (server: HttpServer) in
                         waitUntil { done in
-                            server["/test"] = { request in HttpResponse.OK(HttpResponseBody.JSON([] as AnyObject)) }
+                            server["/test"] = { request in HttpResponse.OK(.Json([] as AnyObject)) }
                             
                             let request = UXCAPIClient(hostname: "localhost", port: 8081, address: nil)
                             request.sendRequest("/test", query: [:], method: .GET, timeout: 3) { response in
@@ -30,7 +30,7 @@ class APIClientTests: QuickSpec {
                         waitUntil(timeout: 5) { done in
                             server["/test"] = { request in
                                 NSThread.sleepForTimeInterval(5)
-                                return HttpResponse.OK(HttpResponseBody.JSON([] as AnyObject))
+                                return HttpResponse.OK(.Json([] as AnyObject))
                             }
                             
                             let request = UXCAPIClient(hostname: "localhost", port: 8081, address: nil)
@@ -49,7 +49,7 @@ class APIClientTests: QuickSpec {
                         waitUntil { done in
                             server["/test"] = { request in
                                 server.stop()
-                                return HttpResponse.OK(HttpResponseBody.JSON([] as AnyObject))
+                                return HttpResponse.OK(.Json([] as AnyObject))
                             }
                             
                             let request = UXCAPIClient(hostname: "localhost", port: 8081, address: nil)
@@ -93,7 +93,7 @@ class APIClientTests: QuickSpec {
                     withSwifter { server in
                         waitUntil { done in
                             server["/test"] = { (request: Swifter.HttpRequest) in
-                                return HttpResponse.OK(HttpResponseBody.JSON(request.headers))
+                                return HttpResponse.OK(.Json(request.headers))
                             }
                             
                             let request = UXCAPIClient(hostname: "localhost", port: 8081, address: nil)
@@ -112,7 +112,7 @@ class APIClientTests: QuickSpec {
                     withSwifter { server in
                         waitUntil(timeout: 3) { done in
                             server["/test"] = { (request: Swifter.HttpRequest) in
-                                return HttpResponse.OK(HttpResponseBody.JSON(request.headers))
+                                return HttpResponse.OK(HttpResponseBody.Json(request.headers))
                             }
                             
                             let resolver = NameResolver(hostname: "localhost", port: 8081)

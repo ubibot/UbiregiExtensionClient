@@ -25,7 +25,7 @@ class UbiregiExtensionTests: QuickSpec {
                 context("GET") {
                     it("sends GET request") {
                         withSwifter { server in
-                            server["/test"] = { request in HttpResponse.OK(HttpResponseBody.JSON([])) }
+                            server["/test"] = { request in HttpResponse.OK(.Json([])) }
                             
                             waitUntil { done in
                                 client.requestJSON("/test", query: [:], method: .GET, body: nil) { response in
@@ -46,7 +46,7 @@ class UbiregiExtensionTests: QuickSpec {
                             server["/test"] = { request in
                                 expect(request.method).to(equal("POST"))
                                 let json = try! NSJSONSerialization.JSONObjectWithData(request.body!.dataUsingEncoding(NSUTF8StringEncoding)!, options: NSJSONReadingOptions.MutableContainers)
-                                return HttpResponse.OK(HttpResponseBody.JSON(json))
+                                return HttpResponse.OK(.Json(json))
                             }
                             
                             waitUntil { done in
@@ -67,7 +67,7 @@ class UbiregiExtensionTests: QuickSpec {
                             server["/test"] = { request in
                                 expect(request.method).to(equal("PUT"))
                                 let json = try! NSJSONSerialization.JSONObjectWithData(request.body!.dataUsingEncoding(NSUTF8StringEncoding)!, options: NSJSONReadingOptions.MutableContainers)
-                                return HttpResponse.OK(HttpResponseBody.JSON(json))
+                                return HttpResponse.OK(.Json(json))
                             }
                             
                             waitUntil { done in
@@ -85,7 +85,7 @@ class UbiregiExtensionTests: QuickSpec {
                 describe("connectionStatus update") {
                     it("updates connectionStatus to .Connected") {
                         withSwifter { server in
-                            server["/test"] = { request in HttpResponse.OK(HttpResponseBody.JSON([1,2,3])) }
+                            server["/test"] = { request in HttpResponse.OK(.Json([1,2,3])) }
                             
                             waitUntil { done in
                                 client.requestJSON("/test", query: [:], method: .PUT, body: ["test": true]) { response in
@@ -111,7 +111,7 @@ class UbiregiExtensionTests: QuickSpec {
                         withSwifter { server in
                             server["/test"] = { request in
                                 NSThread.sleepForTimeInterval(1.5)
-                                return HttpResponse.OK(HttpResponseBody.JSON([1,2,3]))
+                                return HttpResponse.OK(.Json([1,2,3]))
                             }
                             
                             waitUntil(timeout: 4) { done in
@@ -136,7 +136,7 @@ class UbiregiExtensionTests: QuickSpec {
 
                         it("posts notification on connectionStatus update") {
                             withSwifter { server in
-                                server["/test"] = { request in HttpResponse.OK(HttpResponseBody.JSON([1,2,3])) }
+                                server["/test"] = { request in HttpResponse.OK(.Json([1,2,3])) }
                                 
                                 waitUntil { done in
                                     client.requestJSON("/test", query: [:], method: .PUT, body: ["test": true]) { response in
@@ -155,7 +155,7 @@ class UbiregiExtensionTests: QuickSpec {
 
                         it("does not post notification if connectionStatus is not changed") {
                             withSwifter { server in
-                                server["/test"] = { request in HttpResponse.OK(HttpResponseBody.JSON([1,2,3])) }
+                                server["/test"] = { request in HttpResponse.OK(.Json([1,2,3])) }
                                 
                                 client._connectionStatus = .Connected
                                 
