@@ -206,7 +206,8 @@ class APIClientTests: QuickSpec {
                     waitUntil { done in
                         request.resolveAddress(0.5) { result in
                             switch result {
-                            case .Error:
+                            case .Error: fallthrough
+                            case .NotFound:
                                 expect(request.address).to(beNil())
                             default:
                                 XCTAssert(false)
