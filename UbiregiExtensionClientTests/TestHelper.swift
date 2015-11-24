@@ -43,6 +43,10 @@ class NotificationTrace: NSObject {
     func notificationNames() -> [String] {
         return self.notifications.map { $0.name }
     }
+    
+    func observeNotification(name: String, object: AnyObject?) {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: name, object: object)
+    }
 }
 
 func waitFor(timeout: NSTimeInterval, message: String? = nil, predicate: () -> Bool) {

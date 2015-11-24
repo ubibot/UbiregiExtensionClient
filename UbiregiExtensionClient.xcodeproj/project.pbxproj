@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		96134D340856B01188846D2E /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5D998D5D4781AD5DE3F372F /* Pods.framework */; };
+		AB3684021C0473A700E70CB2 /* UXCBarcodeScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3684011C0473A700E70CB2 /* UXCBarcodeScanner.swift */; };
+		AB3684041C047DBC00E70CB2 /* BarcodeScannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3684031C047DBC00E70CB2 /* BarcodeScannerTests.swift */; };
 		AB4038F21BFB60A5007DBEA1 /* UbiregiExtensionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4038F11BFB60A5007DBEA1 /* UbiregiExtensionServiceTests.swift */; };
 		AB913FEAD1DDD8B8FF95B965 /* Pods_UbiregiExtensionClientTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD4B6C23FD6B4D136932278 /* Pods_UbiregiExtensionClientTests.framework */; };
 		ABBEEF781BF23DBC00C3A80E /* UbiregiExtensionClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBEEF6D1BF23DBC00C3A80E /* UbiregiExtensionClient.framework */; };
@@ -43,6 +45,8 @@
 		2D00D5C356495F982BCAF95A /* Pods-UbiregiExtensionClientTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UbiregiExtensionClientTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UbiregiExtensionClientTests/Pods-UbiregiExtensionClientTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4CD4B6C23FD6B4D136932278 /* Pods_UbiregiExtensionClientTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UbiregiExtensionClientTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6837E029B62D87768076213A /* Pods-UbiregiExtensionClientTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UbiregiExtensionClientTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-UbiregiExtensionClientTests/Pods-UbiregiExtensionClientTests.release.xcconfig"; sourceTree = "<group>"; };
+		AB3684011C0473A700E70CB2 /* UXCBarcodeScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UXCBarcodeScanner.swift; sourceTree = "<group>"; };
+		AB3684031C047DBC00E70CB2 /* BarcodeScannerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeScannerTests.swift; sourceTree = "<group>"; };
 		AB4038F11BFB60A5007DBEA1 /* UbiregiExtensionServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UbiregiExtensionServiceTests.swift; sourceTree = "<group>"; };
 		ABBEEF6D1BF23DBC00C3A80E /* UbiregiExtensionClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UbiregiExtensionClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABBEEF771BF23DBC00C3A80E /* UbiregiExtensionClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UbiregiExtensionClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,6 +130,7 @@
 				ABBEEF7E1BF23DBC00C3A80E /* Info.plist */,
 				ABCC5A771BF4873B00E35F85 /* APIClientTests.swift */,
 				ABCC5A751BF4787900E35F85 /* APIResponseTests.swift */,
+				AB3684031C047DBC00E70CB2 /* BarcodeScannerTests.swift */,
 				ABCC5A791BF86B5800E35F85 /* TestHelper.swift */,
 				ABCC5A9A1BFA14ED00E35F85 /* UbiregiExtensionBarcodeTests.swift */,
 				AB4038F11BFB60A5007DBEA1 /* UbiregiExtensionServiceTests.swift */,
@@ -152,6 +157,7 @@
 				ABCC5A7B1BF871E000E35F85 /* ReadWriteLock.swift */,
 				ABCA18351BF2EB7A0086BB0B /* UXCAPIClient.swift */,
 				ABCA18311BF249C40086BB0B /* UXCAPIResponse.swift */,
+				AB3684011C0473A700E70CB2 /* UXCBarcodeScanner.swift */,
 				ABBEEF951BF2445200C3A80E /* UXCConstants.swift */,
 				ABBEEF961BF2445200C3A80E /* UXCUbiregiExtension.swift */,
 				ABCC5A9C1BFA1D2D00E35F85 /* UXCUbiregiExtensionService.swift */,
@@ -364,6 +370,7 @@
 			files = (
 				ABCC5A7C1BF871E000E35F85 /* ReadWriteLock.swift in Sources */,
 				ABCC5A9D1BFA1D2D00E35F85 /* UXCUbiregiExtensionService.swift in Sources */,
+				AB3684021C0473A700E70CB2 /* UXCBarcodeScanner.swift in Sources */,
 				ABCC5A991BF9C1BA00E35F85 /* UXCVersion.swift in Sources */,
 				ABCA18341BF24C0F0086BB0B /* AddressHelper.swift in Sources */,
 				ABCA18321BF249C40086BB0B /* UXCAPIResponse.swift in Sources */,
@@ -386,6 +393,7 @@
 				ABCC5A941BF9BD3700E35F85 /* UbiregiExtensionStatusTests.swift in Sources */,
 				ABCC5A761BF4787900E35F85 /* APIResponseTests.swift in Sources */,
 				ABCC5A7A1BF86B5800E35F85 /* TestHelper.swift in Sources */,
+				AB3684041C047DBC00E70CB2 /* BarcodeScannerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
