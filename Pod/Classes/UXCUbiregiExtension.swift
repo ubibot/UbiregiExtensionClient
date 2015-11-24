@@ -7,7 +7,6 @@ public enum UXCHttpMethod: Int {
     case PUT
 }
 
-
 let UbiregiExtensionDidUpdateConnectionStatusNotification = "UXCUbiregiExtensionDidUpdateConnectionStatusNotification"
 let UbiregiExtensionDidUpdateStatusNotification = "UXCUbiregiExtensionDidUpdateConnectionNotification"
 let UbiregiExtensionDidUpdatePrinterAvailabilityNotification = "UXCUbiregiExtensionDidUpdatePrinterAvailabilityNotification"

@@ -144,5 +144,49 @@ class UbiregiExtensionServiceTests: QuickSpec {
                 }
             }
         }
+        
+        describe("barcode scanning") {
+            var e1: UXCUbiregiExtension!
+            
+            beforeEach {
+                // Update connection status every seconds
+                service.updateStatusInterval = 0.1
+                // Set non main queue for notification
+                service.notificationQueue = dispatch_queue_create("com.ubiregi.UbiregiExtensionClient.test", nil)
+                
+                e1 = UXCUbiregiExtension(hostname: "localhost", port: 8081, numericAddress: nil)
+            }
+            
+            afterEach {
+                e1 = nil
+            }
+            
+            let responseWithDevices = { (request: HttpRequest) in
+                HttpResponse.OK(
+                    .Json(
+                        [
+                            "version": "1.2.3",
+                            "product_version": "October, 2015",
+                            "release": "1-3",
+                            "printers": ["present"],
+                            "barcodes": ["present"]
+                        ]
+                    )
+                )
+            }
+            
+            it("posts a notification on barcode scan") {
+                withSwifter { server in
+                    server["/status"] = responseWithDevices
+                    server["/scan"] = { request in .OK(.Text("123456")) }
+                    
+                    self.expectationForNotification(UXCConstants.UbiregiExtensionServiceDidScanBarcodeNotification, object: service, handler: nil)
+                    
+                    service.addExtension(e1)
+                    
+                    self.waitForExpectationsWithTimeout(1, handler: nil)
+                }
+            }
+        }
     }
 }

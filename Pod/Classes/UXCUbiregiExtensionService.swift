@@ -2,6 +2,7 @@ import Foundation
 
 public class UXCUbiregiExtensionService: NSObject {
     var _extensions: [UXCUbiregiExtension]
+    var _barcodeScanners: [UXCUbiregiExtension: UXCBarcodeScanner]
     var _connectionStatus: UXCConnectionStatus
     var _isPrinterAvailable: Bool
     var _isBarcodeScannerAvailable: Bool
@@ -12,6 +13,7 @@ public class UXCUbiregiExtensionService: NSObject {
     
     override public init() {
         self._extensions = []
+        self._barcodeScanners = [:]
         self.lock = ReadWriteLock()
         self._connectionStatus = .Initialized
         self._isPrinterAvailable = false
@@ -22,6 +24,7 @@ public class UXCUbiregiExtensionService: NSObject {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "connectionStatusDidUpdate:", name: UbiregiExtensionDidUpdateConnectionStatusNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "statusDidUpdate:", name: UbiregiExtensionDidUpdateStatusNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didScanBarcode:", name: BarcodeScannerDidScanBarcodeNotification, object: nil)
         
         weak var this = self
         let updateStatusQueue = dispatch_queue_create("com.ubiregi.UXCUbiregiExtensionService.updateStatus", nil)
@@ -57,6 +60,7 @@ public class UXCUbiregiExtensionService: NSObject {
         self.lock.write {
             if !self._extensions.contains(ext) {
                 self._extensions.append(ext)
+                self._barcodeScanners[ext] = UXCBarcodeScanner(ext: ext)
             }
         }
         
@@ -68,6 +72,7 @@ public class UXCUbiregiExtensionService: NSObject {
         self.lock.write {
             if let index = self._extensions.indexOf(ext) {
                 self._extensions.removeAtIndex(index)
+                self._barcodeScanners.removeAtIndex(self._barcodeScanners.indexForKey(ext)!)
             }
         }
         
@@ -207,6 +212,13 @@ public class UXCUbiregiExtensionService: NSObject {
     func statusDidUpdate(notification: NSNotification) {
         if self.hasExtension(notification.object as! UXCUbiregiExtension) {
             self.updateDeviceAvailability()
+        }
+    }
+    
+    func didScanBarcode(notification: NSNotification) {
+        let barcodeScanner = notification.object as! UXCBarcodeScanner
+        if self._barcodeScanners[barcodeScanner.ext] != nil {
+            self.postNotification(UXCConstants.UbiregiExtensionServiceDidScanBarcodeNotification, userInfo: notification.userInfo)
         }
     }
 }

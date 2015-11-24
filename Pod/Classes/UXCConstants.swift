@@ -13,6 +13,8 @@ public class UXCConstants: NSObject {
     public static let UbiregiExtensionServiceDidUpdateConnectionStatusNotification = "UXCUbiregiExtensionServiceDidUpdateConnectionStatusNotification"
     public static let UbiregiExtensionServiceDidUpdatePrinterAvailabilityNotification = "UXCUbiregiExtensionServiceDidUpdatePrinterAvailabilityNotification"
     public static let UbiregiExtensionServiceDidUpdateBarcodeScannerAvailabilityNotification = "UXCUBiregiExtensionServiceDidUpdateBarcodeScannerAvailabilityNotification"
+    public static let UbiregiExtensionServiceDidScanBarcodeNotification = "UXCUbiregiExtensionServiceDidScanBarcodeNotification";
+    public static let UbiregiExtensionServiceScanedBarcodeKey = BarcodeScannerScanedBarcodeKey
 }
 
 @objc public enum UXCConnectionStatus: Int {
