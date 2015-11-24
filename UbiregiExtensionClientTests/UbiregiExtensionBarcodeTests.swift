@@ -80,6 +80,26 @@ class UbiregiExtensionBarcodeTests: QuickSpec {
                 }
             }
             
+            it("keeps .hasBarcodeScanner even if timeout") {
+                withSwifter { server in
+                    client._connectionStatus = .Connected
+                    client._hasBarcodeScanner = true
+                    
+                    server["/scan"] = { request in
+                        NSThread.sleepForTimeInterval(1)
+                        return .OK(.Text(""))
+                    }
+                    
+                    waitUntil { done in
+                        client.scanBarcode(0.5) { barcode in
+                            done()
+                        }
+                    }
+                    
+                    expect(client.hasBarcodeScanner).to(beTrue())
+                }
+            }
+            
             it("updates hasBarcodeScanner to false if 404 returned") {
                 withSwifter { server in
                     server["/scan"] = { request in
