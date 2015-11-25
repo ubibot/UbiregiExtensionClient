@@ -4,22 +4,17 @@ import Foundation
     case UnexpectedResponse
 }
 
-public protocol UXCAPIResponse: NSObjectProtocol {
-    func trySuccessResponse(block: (UXCAPISuccessResponse) -> ()) throws -> ()
-    func tryErrorResponse(block: (UXCAPIErrorResponse) -> ()) throws -> ()
-}
-
-public extension UXCAPIResponse {
-    public func trySuccessResponse(block: (UXCAPISuccessResponse) -> ()) throws ->() {
+@objc public class UXCAPIResponse: NSObject {
+    func trySuccessResponse(block: (UXCAPISuccessResponse) -> ()) throws -> () {
         throw UXCAPIResponseError.UnexpectedResponse
     }
     
-    public func tryErrorResponse(block: (UXCAPIErrorResponse) -> ()) throws -> () {
+    func tryErrorResponse(block: (UXCAPIErrorResponse) -> ()) throws -> () {
         throw UXCAPIResponseError.UnexpectedResponse
     }
 }
 
-public class UXCAPISuccessResponse: NSObject, UXCAPIResponse {
+public class UXCAPISuccessResponse: UXCAPIResponse {
     public let code: Int
     public let header: [String: String]
     public let body: NSData
@@ -52,19 +47,19 @@ public class UXCAPISuccessResponse: NSObject, UXCAPIResponse {
         return nil
     }
     
-    public func trySuccessResponse(block: (UXCAPISuccessResponse) -> ()) throws {
+    override public func trySuccessResponse(block: (UXCAPISuccessResponse) -> ()) throws {
         block(self)
     }
 }
 
-public class UXCAPIErrorResponse: NSObject, UXCAPIResponse {
+public class UXCAPIErrorResponse: UXCAPIResponse {
     public let error: NSError
     
     internal init(error: NSError) {
         self.error = error
     }
     
-    public func tryErrorResponse(block: (UXCAPIErrorResponse) -> ()) throws {
+    override public func tryErrorResponse(block: (UXCAPIErrorResponse) -> ()) throws {
         block(self)
     }
 }
