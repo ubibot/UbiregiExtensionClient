@@ -15,6 +15,10 @@ public class UXCConstants: NSObject {
     public static let UbiregiExtensionServiceDidUpdateBarcodeScannerAvailabilityNotification = "UXCUBiregiExtensionServiceDidUpdateBarcodeScannerAvailabilityNotification"
     public static let UbiregiExtensionServiceDidScanBarcodeNotification = "UXCUbiregiExtensionServiceDidScanBarcodeNotification";
     public static let UbiregiExtensionServiceScanedBarcodeKey = BarcodeScannerScanedBarcodeKey
+    
+    public static let UbiregiExtensionBrowserDidFindExtensionNotification = "UXCUbiregiExtensionBrowserDidFindExtensionNotification";
+    public static let UbiregiExtensionBrowserExtensionHostKey = "host"
+    public static let UbiregiExtensionBrowserExtensionPortKey = "port"
 }
 
 @objc public enum UXCConnectionStatus: Int {
