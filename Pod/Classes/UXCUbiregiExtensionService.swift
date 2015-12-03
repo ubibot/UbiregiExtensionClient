@@ -127,7 +127,7 @@ public class UXCUbiregiExtensionService: NSObject {
         }
     }
     
-    public func updateStatus(callback: () -> () = {}) {
+    public func updateStatus(callback: () -> ()) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             let semaphore = dispatch_semaphore_create(0)
             
@@ -145,6 +145,10 @@ public class UXCUbiregiExtensionService: NSObject {
             
             callback()
         }
+    }
+    
+    public func updateStatus() {
+        self.updateStatus({})
     }
     
     private func postNotification(name: String, userInfo: [NSObject: AnyObject]? = nil) {
