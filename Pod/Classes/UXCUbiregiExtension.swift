@@ -160,6 +160,10 @@ public class UXCUbiregiExtension: NSObject {
         }
     }
     
+    public func updateStatus() {
+        self.updateStatus(callback: {})
+    }
+    
     public func scanBarcode(timeout: NSTimeInterval = 20, callback: (String?) -> ()) {
         self.requestJSON("/scan", query: [:], method: .GET, body: nil, timeout: timeout, allowTimeout: true) { response in
             let barcode: String?
