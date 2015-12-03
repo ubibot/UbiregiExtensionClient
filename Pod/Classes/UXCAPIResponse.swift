@@ -5,16 +5,16 @@ import Foundation
 }
 
 @objc public class UXCAPIResponse: NSObject {
-    func trySuccessResponse(block: (UXCAPISuccessResponse) -> ()) throws -> () {
+    public func trySuccessResponse(block: (UXCAPISuccessResponse) -> ()) throws -> () {
         throw UXCAPIResponseError.UnexpectedResponse
     }
     
-    func tryErrorResponse(block: (UXCAPIErrorResponse) -> ()) throws -> () {
+    public func tryErrorResponse(block: (UXCAPIErrorResponse) -> ()) throws -> () {
         throw UXCAPIResponseError.UnexpectedResponse
     }
 }
 
-public class UXCAPISuccessResponse: UXCAPIResponse {
+@objc public class UXCAPISuccessResponse: UXCAPIResponse {
     public let code: Int
     public let header: [String: String]
     public let body: NSData
@@ -52,7 +52,7 @@ public class UXCAPISuccessResponse: UXCAPIResponse {
     }
 }
 
-public class UXCAPIErrorResponse: UXCAPIResponse {
+@objc public class UXCAPIErrorResponse: UXCAPIResponse {
     public let error: NSError
     
     internal init(error: NSError) {
