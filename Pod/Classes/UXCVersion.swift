@@ -1,11 +1,11 @@
 import Foundation
 
 public class UXCVersion: NSObject {
-    let major: Int
-    let minor: Int
-    let patch: Int
-    let label: String?
-    let string: String
+    public let major: Int
+    public let minor: Int
+    public let patch: Int
+    public let label: String?
+    public let string: String
     
     init(string: String) {
         self.string = string
