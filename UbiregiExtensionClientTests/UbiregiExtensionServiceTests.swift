@@ -113,6 +113,8 @@ class UbiregiExtensionServiceTests: QuickSpec {
                 }
                 
                 it("posts notification on connection status update") {
+                    service.periodicalUpdateStatusEnabled = false
+                    
                     service.addExtension(e1)
                     
                     waitFor(2, message: "Wait for connection status got .Error") {
@@ -127,11 +129,8 @@ class UbiregiExtensionServiceTests: QuickSpec {
                         
                         service.updateStatus()
                         
-                        waitUntil(timeout: 3) {
-                            NSThread.sleepForTimeInterval(1)
-                            $0()
-                        }
-                        
+                        NSThread.sleepForTimeInterval(1)
+                    
                         let connectionNotifications = observer.notifications.filter {
                             let newStatus = $0.userInfo!["newConnectionStatus"] as! Int
                             let oldStatus = $0.userInfo!["oldConnectionStatus"] as! Int
