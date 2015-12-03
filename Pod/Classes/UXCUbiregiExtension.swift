@@ -5,6 +5,7 @@ public enum UXCHttpMethod: Int {
     case GET
     case POST
     case PUT
+    case DELETE
 }
 
 let UbiregiExtensionDidUpdateConnectionStatusNotification = "UXCUbiregiExtensionDidUpdateConnectionStatusNotification"
@@ -70,6 +71,8 @@ public class UXCUbiregiExtension: NSObject {
             m = .POST(bodyData)
         case .PUT:
             m = .PUT(bodyData)
+        case .DELETE:
+            m = .DELETE
         }
         
         self.client.sendRequest(path, query: query, method: m, timeout: timeout) { response in
@@ -102,7 +105,15 @@ public class UXCUbiregiExtension: NSObject {
     }
     
     @objc public func postJSON(path: String, json: AnyObject, timeout: NSTimeInterval = 5, callback: (UXCAPIResponse) -> ()) {
-        self.requestJSON(path, query: [:], method: .POST, body: json, callback: callback)
+        self.requestJSON(path, query: [:], method: .POST, body: json, timeout: timeout, callback: callback)
+    }
+    
+    @objc public func putJSON(path: String, json: AnyObject, timeout: NSTimeInterval = 5, callback: (UXCAPIResponse) -> ()) {
+        self.requestJSON(path, query: [:], method: .PUT, body: json, timeout: timeout, callback: callback)
+    }
+    
+    @objc public func deleteJSON(path: String, timeout: NSTimeInterval = 5, callback: (UXCAPIResponse) -> ()) {
+        self.requestJSON(path, query: [:], method: .DELETE, body: nil, timeout: timeout, callback: callback)
     }
     
     public var version: UXCVersion? {
