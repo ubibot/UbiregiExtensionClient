@@ -142,6 +142,31 @@ class UbiregiExtensionServiceTests: QuickSpec {
                         expect(connectionNotifications.count).to(equal(1))
                     }
                 }
+                
+                it("makes next retry soon if connection failed") {
+                    service.periodicalUpdateStatusEnabled = false
+                    service.updateStatusInterval = 120
+                    service._connectionStatus = .Connected
+                    
+                    // Wait for already running updateStatus to finish
+                    NSThread.sleepForTimeInterval(0.3)
+
+                    // Use _extensions directly, not addExtension, to skip updateStatus call on extension addition
+                    service._extensions.append(e1)
+                    
+                    // Kick connection failure recovery
+                    NSNotificationCenter.defaultCenter().postNotificationName(UbiregiExtensionDidUpdateConnectionStatusNotification, object: e1)
+                    
+                    withSwifter(8080) { server in
+                        self.expectationForNotification(UXCConstants.UbiregiExtensionServiceDidUpdateConnectionStatusNotification, object: service) { notification in
+                            service.connectionStatus == UXCConnectionStatus.Connected
+                        }
+                        
+                        server["/status"] = returnJSON(["version": "3.4.5"])
+                        
+                        self.waitForExpectationsWithTimeout(3.0, handler: nil)
+                    }
+                }
             }
         }
         

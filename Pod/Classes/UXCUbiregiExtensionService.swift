@@ -1,13 +1,16 @@
 import Foundation
 
 public class UXCUbiregiExtensionService: NSObject {
+    public var updateStatusInterval: NSTimeInterval = 30
+    
     var _extensions: [UXCUbiregiExtension]
     var _barcodeScanners: [UXCUbiregiExtension: UXCBarcodeScanner]
     var _connectionStatus: UXCConnectionStatus
     var _isPrinterAvailable: Bool
     var _isBarcodeScannerAvailable: Bool
-    public var updateStatusInterval: NSTimeInterval = 30
+    var periodicalUpdateStatusEnabled: Bool = true
     var notificationQueue: dispatch_queue_t
+    var recoveringExtensions: Set<UXCUbiregiExtension>
     
     let lock: ReadWriteLock
     
@@ -19,6 +22,7 @@ public class UXCUbiregiExtensionService: NSObject {
         self._isPrinterAvailable = false
         self._isBarcodeScannerAvailable = false
         self.notificationQueue = dispatch_get_main_queue()
+        self.recoveringExtensions = Set()
         
         super.init()
         
@@ -31,7 +35,7 @@ public class UXCUbiregiExtensionService: NSObject {
         
         dispatch_async(updateStatusQueue) {
             while this != nil {
-                if this?.updateStatusInterval > 0 {
+                if this?.periodicalUpdateStatusEnabled ?? false {
                     this?.updateStatus()
                 }
                 let interval = this?.updateStatusInterval ?? 0
@@ -189,6 +193,20 @@ public class UXCUbiregiExtensionService: NSObject {
         }
     }
     
+    func recoverExtensionConnectionStatus(ext: UXCUbiregiExtension, interval: NSTimeInterval, callback: () -> ()) {
+        let when = dispatch_time(DISPATCH_TIME_NOW, Int64(interval * Double(NSEC_PER_SEC)))
+        dispatch_after(when, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            ext.updateStatus {
+                let nextInterval = interval * 2
+                if ext.connectionStatus != .Connected && nextInterval < self.updateStatusInterval {
+                    self.recoverExtensionConnectionStatus(ext, interval: nextInterval, callback: callback)
+                } else {
+                    callback()
+                }
+            }
+        }
+    }
+    
     func updateDeviceAvailability() {
         let hasPrinter = self.anyExtension { $0.hasPrinter && $0.connectionStatus == .Connected }
         let hasBarcodeScanner = self.anyExtension { $0.hasBarcodeScanner && $0.connectionStatus == .Connected }
@@ -207,9 +225,21 @@ public class UXCUbiregiExtensionService: NSObject {
     }
     
     func connectionStatusDidUpdate(notification: NSNotification) {
-        if self.hasExtension(notification.object as! UXCUbiregiExtension) {
-            self.updateConnectionStatus()
-            self.updateDeviceAvailability()
+        if let ext = notification.object as? UXCUbiregiExtension {
+            if self.hasExtension(ext) {
+                self.updateConnectionStatus()
+                self.updateDeviceAvailability()
+                
+                if ext.connectionStatus != .Connected {
+                    if !self.recoveringExtensions.contains(ext) {
+                        self.recoveringExtensions.insert(ext)
+                        
+                        self.recoverExtensionConnectionStatus(ext, interval: 1) {
+                            self.recoveringExtensions.remove(ext)
+                        }
+                    }
+                }
+            }
         }
     }
     
