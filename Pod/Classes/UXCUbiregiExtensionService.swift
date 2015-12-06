@@ -69,6 +69,7 @@ public class UXCUbiregiExtensionService: NSObject {
         }
         
         self.updateStatus()
+        self.updateConnectionStatus()
         self.updateDeviceAvailability()
     }
     
