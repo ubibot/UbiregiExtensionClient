@@ -26,13 +26,17 @@ import Foundation
     }
     
     public var JSONBody: AnyObject? {
-        if self.contentType == "application/json" {
-            do {
-                return try NSJSONSerialization.JSONObjectWithData(self.body, options: NSJSONReadingOptions.MutableContainers)
-            } catch _ {
-                return nil
-            }
-        } else {
+        guard let contentType = self.contentType else {
+            return nil
+        }
+        
+        guard contentType.hasPrefix("application/json") else {
+            return nil
+        }
+        
+        do {
+            return try NSJSONSerialization.JSONObjectWithData(self.body, options: NSJSONReadingOptions.MutableContainers)
+        } catch _ {
             return nil
         }
     }

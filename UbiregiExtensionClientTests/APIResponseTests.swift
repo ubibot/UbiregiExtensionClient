@@ -23,6 +23,15 @@ class APIResponseTests: QuickSpec {
                     }
                 }
                 
+                context("Content-Type is application/json; charset=utf-8") {
+                    it("returns object represented by body") {
+                        let string = "[]"
+                        let result = UXCAPISuccessResponse(code: 200, header: ["Content-Type": "application/json; charset=utf8"], body: string.dataUsingEncoding(NSUTF8StringEncoding)!)
+                        
+                        expect(result.JSONBody!.isEqual([])).to(beTrue())
+                    }
+                }
+                
                 context("Content-Type is not application/json") {
                     it("returns nil") {
                         let result = UXCAPISuccessResponse(code: 200, header: ["Content-Type": "text/html"], body: "".dataUsingEncoding(NSUTF8StringEncoding)!)
