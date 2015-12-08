@@ -39,18 +39,24 @@ class UXCBarcodeScanner: NSObject {
             
             self.isScanning = true
 
+            weak var weakSelf: UXCBarcodeScanner? = self
+            
             self.ext.scanBarcode { barcode in
-                self.lock.write {
-                    if self.isScanning {
+                guard let this = weakSelf else {
+                    return
+                }
+                
+                this.lock.write {
+                    if this.isScanning {
                         if let barcode = barcode {
-                            NSNotificationCenter.defaultCenter().postNotificationName(BarcodeScannerDidScanBarcodeNotification, object: self, userInfo: [BarcodeScannerScanedBarcodeKey: barcode])
+                            NSNotificationCenter.defaultCenter().postNotificationName(BarcodeScannerDidScanBarcodeNotification, object: this, userInfo: [BarcodeScannerScanedBarcodeKey: barcode])
                         }
-                        self.isScanning = false
+                        this.isScanning = false
                     }
                     
-                    if !self.isIdle {
+                    if !this.isIdle {
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-                            self.tryScan()
+                            this.tryScan()
                         }
                     }
                 }
