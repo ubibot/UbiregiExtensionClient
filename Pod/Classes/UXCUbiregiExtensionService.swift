@@ -252,7 +252,7 @@ public class UXCUbiregiExtensionService: NSObject {
     
     func didScanBarcode(notification: NSNotification) {
         let barcodeScanner = notification.object as! UXCBarcodeScanner
-        if self._barcodeScanners[barcodeScanner.ext] != nil {
+        if self._barcodeScanners[barcodeScanner.ext] == barcodeScanner {
             self.postNotification(UXCConstants.UbiregiExtensionServiceDidScanBarcodeNotification, userInfo: notification.userInfo)
         }
     }
