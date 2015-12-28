@@ -29,7 +29,7 @@ class UbiregiExtensionStatusTests: QuickSpec {
                 it("sends timestamp and reload to /status") {
                     withSwifter { server in
                         server["/status"] = { request in
-                            let d = dictionary(request.urlParams)
+                            let d = dictionary(request.queryParams)
                             expect(d["timestamp"]).notTo(beEmpty())
                             expect(d["reload"]).to(equal("false"))
                             return HttpResponse.OK(.Json(jsonResponse))
@@ -46,7 +46,7 @@ class UbiregiExtensionStatusTests: QuickSpec {
                 it("sends GET request to /status with reload=true parameter") {
                     withSwifter { server in
                         server["/status"] = { (request: HttpRequest) in
-                            let d = dictionary(request.urlParams)
+                            let d = dictionary(request.queryParams)
                             expect(d["reload"]).to(equal("true"))
                             return HttpResponse.OK(.Json(jsonResponse))
                         }

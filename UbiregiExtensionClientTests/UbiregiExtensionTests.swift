@@ -45,7 +45,7 @@ class UbiregiExtensionTests: QuickSpec {
                         withSwifter { server in
                             server["/test"] = { request in
                                 expect(request.method).to(equal("POST"))
-                                let json = try! NSJSONSerialization.JSONObjectWithData(request.body!.dataUsingEncoding(NSUTF8StringEncoding)!, options: NSJSONReadingOptions.MutableContainers)
+                                let json = try! NSJSONSerialization.JSONObjectWithData(String.fromUInt8(request.body).dataUsingEncoding(NSUTF8StringEncoding)!, options: NSJSONReadingOptions.MutableContainers)
                                 return HttpResponse.OK(.Json(json))
                             }
                             
@@ -66,7 +66,7 @@ class UbiregiExtensionTests: QuickSpec {
                         withSwifter { server in
                             server["/test"] = { request in
                                 expect(request.method).to(equal("PUT"))
-                                let json = try! NSJSONSerialization.JSONObjectWithData(request.body!.dataUsingEncoding(NSUTF8StringEncoding)!, options: NSJSONReadingOptions.MutableContainers)
+                                let json = try! NSJSONSerialization.JSONObjectWithData(String.fromUInt8(request.body).dataUsingEncoding(NSUTF8StringEncoding)!, options: NSJSONReadingOptions.MutableContainers)
                                 return HttpResponse.OK(.Json(json))
                             }
                             
