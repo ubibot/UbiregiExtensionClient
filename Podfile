@@ -10,4 +10,5 @@ target 'UbiregiExtensionClientTests', :exclusive => true do
   pod 'Swifter'
   pod 'Quick'
   pod 'Nimble'
+  pod 'XcodeTestNavigatorFix'
 end
