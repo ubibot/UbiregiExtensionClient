@@ -5,12 +5,12 @@ import Foundation
 }
 
 @objc public class UXCAPIResponse: NSObject {
-    public func trySuccessResponse(block: (UXCAPISuccessResponse) -> ()) throws -> () {
-        throw UXCAPIResponseError.UnexpectedResponse
+    public func trySuccessResponse(block: (UXCAPISuccessResponse) -> ()) -> () {
+        // Nothing to do
     }
     
-    public func tryErrorResponse(block: (UXCAPIErrorResponse) -> ()) throws -> () {
-        throw UXCAPIResponseError.UnexpectedResponse
+    public func tryErrorResponse(block: (UXCAPIErrorResponse) -> ()) -> () {
+        // Nothing to do
     }
 }
 
@@ -51,7 +51,7 @@ import Foundation
         return nil
     }
     
-    override public func trySuccessResponse(block: (UXCAPISuccessResponse) -> ()) throws {
+    override public func trySuccessResponse(block: (UXCAPISuccessResponse) -> ()) {
         block(self)
     }
 }
@@ -63,7 +63,7 @@ import Foundation
         self.error = error
     }
     
-    override public func tryErrorResponse(block: (UXCAPIErrorResponse) -> ()) throws {
+    override public func tryErrorResponse(block: (UXCAPIErrorResponse) -> ()) {
         block(self)
     }
 }

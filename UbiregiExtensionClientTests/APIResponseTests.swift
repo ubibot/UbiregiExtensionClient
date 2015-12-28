@@ -45,36 +45,30 @@ class APIResponseTests: QuickSpec {
         describe("#trySuccessResponse") {
             it("yields itself on success response") {
                 let response = UXCAPISuccessResponse(code: 200, header: [:], body: NSData())
-                try! response.trySuccessResponse { res in
+                response.trySuccessResponse { res in
                     expect(res).to(beIdenticalTo(response))
                 }
             }
             
-            it("throws an error on error response") {
-                do {
-                    let response = UXCAPIErrorResponse(error: NSError(domain: "TestDomain", code: 0, userInfo: [:]))
-                    try response.trySuccessResponse { res in }
+            it("does not yield on error response") {
+                let response = UXCAPIErrorResponse(error: NSError(domain: "TestDomain", code: 0, userInfo: [:]))
+                response.trySuccessResponse { res in
                     expect("not to be reached").to(equal("but is reached"))
-                } catch _ {
-                    // ok
                 }
             }
         }
         
         describe("#tryErrorResponse") {
-            it("yields itself on success response") {
-                do {
-                    let response = UXCAPISuccessResponse(code: 200, header: [:], body: NSData())
-                    try response.tryErrorResponse { res in }
+            it("does not yield on success esponse") {
+                let response = UXCAPISuccessResponse(code: 200, header: [:], body: NSData())
+                response.tryErrorResponse { res in
                     expect("not to be reached").to(equal("but is reached"))
-                } catch _ {
-                    // ok
                 }
             }
             
             it("yields itself on error response") {
                 let response = UXCAPIErrorResponse(error: NSError(domain: "TestDomain", code: 0, userInfo: [:]))
-                try! response.tryErrorResponse { res in
+                response.tryErrorResponse { res in
                     expect(res).to(beIdenticalTo(response))
                 }
             }

@@ -29,7 +29,7 @@ class UbiregiExtensionTests: QuickSpec {
                             
                             waitUntil { done in
                                 client.requestJSON("/test", query: [:], method: .GET, body: nil) { response in
-                                    try! response.trySuccessResponse { response in
+                                    response.trySuccessResponse { response in
                                         expect(response.code).to(equal(200))
                                         expect(response.JSONBody?.isEqual([])).to(beTrue())
                                     }
@@ -51,7 +51,7 @@ class UbiregiExtensionTests: QuickSpec {
                             
                             waitUntil { done in
                                 client.requestJSON("/test", query: [:], method: .POST, body: ["test": true]) { response in
-                                    try! response.trySuccessResponse { response in
+                                    response.trySuccessResponse { response in
                                         expect(response.JSONBody?.isEqual(["test": true])).to(beTrue())
                                     }
                                     done()
@@ -72,7 +72,7 @@ class UbiregiExtensionTests: QuickSpec {
                             
                             waitUntil { done in
                                 client.requestJSON("/test", query: [:], method: .PUT, body: ["test": true]) { response in
-                                    try! response.trySuccessResponse { response in
+                                    response.trySuccessResponse { response in
                                         expect(response.JSONBody?.isEqual(["test": true])).to(beTrue())
                                     }
                                     done()
