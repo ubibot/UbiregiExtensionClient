@@ -44,6 +44,10 @@ public class UXCUbiregiExtensionService: NSObject {
         }
     }
     
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
     public var extensions: [UXCUbiregiExtension] {
         return self.lock.read { self._extensions }
     }
